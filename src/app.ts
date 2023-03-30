@@ -1,10 +1,5 @@
-import express, {
-    Errback,
-    ErrorRequestHandler,
-    NextFunction,
-    Request,
-    Response,
-} from 'express'
+import 'express-async-errors'
+import express from 'express'
 import { initializeRoutes } from './routes'
 import { emptyBody, errorHandler } from './middlewares'
 
