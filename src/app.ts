@@ -6,12 +6,13 @@ import express, {
     Response,
 } from 'express'
 import { initializeRoutes } from './routes'
-import { errorHandler } from './middlewares'
+import { emptyBody, errorHandler } from './middlewares'
 
 const app = express()
 const port = 8080
 
 app.use(express.json())
+app.use(emptyBody)
 
 initializeRoutes(app)
 
