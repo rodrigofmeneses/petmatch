@@ -1,1 +1,1 @@
-export { default as createTutorHandler } from './create'
+export { default as CreateTutorHandler } from './create'

@@ -1,10 +1,20 @@
 import { Router } from 'express'
-import { createTutorHandler } from '../handlers/tutor'
+import { CreateTutorHandler } from '../handlers/tutor'
+import { CreateTutorRequestValidator } from '../handlers/tutor/request'
+import TutorRepository from '../repositories/tutor'
 
 const router = Router()
 
-router.get('/tutor/:id', createTutorHandler)
-router.post('/tutor')
+const createTutorRequestValidate = new CreateTutorRequestValidator()
+const tutorRepository = new TutorRepository()
+
+const createHandler = new CreateTutorHandler(
+    createTutorRequestValidate,
+    tutorRepository
+)
+
+router.get('/tutor/:id')
+router.post('/tutor', (req, res) => createHandler.route(req, res))
 router.put('/tutor/:id')
 router.delete('/tutor/:id')
 router.get('/tutors')

@@ -1,7 +1,37 @@
 import { Request, Response } from 'express'
+import { CreateTutorRequestValidator, createTutorRequest } from './request'
+import ValidationError from '../../errors/validation-error'
+import TutorRepository from '../../repositories/tutor'
+import { createTutorResponseMapper } from './response'
+import { BadRequest } from '../../errors'
 
-const createTutorHandler = (req: Request, res: Response) => {
-    res.send('tutor')
+class CreateTutorHandler {
+    constructor(
+        protected createTutorRequestValidator: CreateTutorRequestValidator,
+        protected tutorRepository: TutorRepository
+    ) {}
+
+    async route(req: Request, res: Response) {
+        // Receive data
+        const { name, email, password }: createTutorRequest = req.body
+        const requestTutor = { name, email, password }
+
+        // Validade data
+        if (!this.createTutorRequestValidator.isValid(requestTutor)) {
+            throw new ValidationError('Validation Error')
+        }
+
+        // UseCase - Register tutor on database
+        const dbTutor = await this.tutorRepository.findByEmail(email)
+        if (dbTutor) {
+            throw new BadRequest('Invalid Email')
+        }
+        const tutor = await this.tutorRepository.create(requestTutor)
+        // Handle Response
+        const tutorResponse = createTutorResponseMapper(tutor)
+
+        res.status(201).send(tutorResponse)
+    }
 }
 
-export default createTutorHandler
+export default CreateTutorHandler
