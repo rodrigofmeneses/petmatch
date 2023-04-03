@@ -12,6 +12,14 @@ class TutorRepository {
     async findByEmail(email: string): Promise<Tutor | null> {
         return prisma.tutor.findFirst({ where: { email } })
     }
+
+    async findById(id: string): Promise<Tutor | null> {
+        return prisma.tutor.findFirst({ where: { id } })
+    }
+
+    async deleteById(id: string): Promise<Tutor | null> {
+        return prisma.tutor.delete({ where: { id } })
+    }
 }
 
 export default TutorRepository
