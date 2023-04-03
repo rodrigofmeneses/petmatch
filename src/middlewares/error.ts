@@ -15,6 +15,10 @@ const errorHandler = (
         message = 'Malformed JSON Body'
     }
 
+    if (err.message.includes('prisma')) {
+        message = 'Database Error'
+    }
+
     return res.status(status).send({ message })
 }
 
