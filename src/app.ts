@@ -1,13 +1,12 @@
 import 'express-async-errors'
 import express from 'express'
 import { initializeRoutes } from './routes'
-import { emptyBody, errorHandler } from './middlewares'
+import { errorHandler } from './middlewares'
 
 const app = express()
 const port = 8080
 
 app.use(express.json())
-app.use(emptyBody)
 
 initializeRoutes(app)
 

@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { CreateTutorHandler } from '../handlers/tutor'
+import { CreateTutorHandler, DeleteTutorHandler } from '../handlers/tutor'
 import { CreateTutorRequestValidator } from '../handlers/tutor/request'
 import TutorRepository from '../repositories/tutor'
+import { emptyBody } from '../middlewares'
 
 const router = Router()
 
@@ -13,10 +14,12 @@ const createHandler = new CreateTutorHandler(
     tutorRepository
 )
 
-router.get('/tutor/:id')
-router.post('/tutor', (req, res) => createHandler.route(req, res))
-router.put('/tutor/:id')
-router.delete('/tutor/:id')
+const deleteHandler = new DeleteTutorHandler(tutorRepository)
+
+router.get('/tutor')
+router.post('/tutor', emptyBody, (req, res) => createHandler.route(req, res))
+router.put('/tutor')
+router.delete('/tutor', (req, res) => deleteHandler.route(req, res))
 router.get('/tutors')
 
 export default router
