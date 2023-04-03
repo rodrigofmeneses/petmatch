@@ -9,6 +9,7 @@ interface Tutor {
     about: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    [key: string]: any
 }
 
 export default Tutor

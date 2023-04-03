@@ -5,9 +5,24 @@ export interface TutorResponse {
     message: string
 }
 
-export const tutorResponseMapper = ({ id, name, email, createdAt }: Tutor) => ({
+export const tutorResponseMapper = ({
     id,
     name,
     email,
+    about,
+    avatar,
+    city,
+    phone,
     createdAt,
+    updatedAt,
+}: Tutor) => ({
+    id,
+    name,
+    email,
+    about,
+    avatar,
+    city,
+    phone,
+    createdAt,
+    updatedAt,
 })

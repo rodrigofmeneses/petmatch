@@ -1,6 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import { Tutor } from '../schemas'
-import { createTutorRequest } from '../handlers/tutor/request'
+import {
+    createTutorRequest,
+    updateTutorRequest,
+} from '../handlers/tutor/request'
+import { BadRequest } from '../errors'
 
 const prisma = new PrismaClient()
 
@@ -19,6 +23,16 @@ class TutorRepository {
 
     async deleteById(id: string): Promise<Tutor | null> {
         return prisma.tutor.delete({ where: { id } })
+    }
+
+    async updateById(
+        id: string,
+        tutor: updateTutorRequest
+    ): Promise<Tutor | null> {
+        return prisma.tutor.update({
+            data: tutor,
+            where: { id },
+        })
     }
 }
 
