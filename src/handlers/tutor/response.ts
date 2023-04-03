@@ -1,16 +1,11 @@
 import { Tutor } from '../../schemas'
 
-export type createTutorResponse = Pick<
-    Tutor,
-    'id' | 'name' | 'email' | 'createdAt' | 'updatedAt'
->
+export interface TutorResponse {
+    data: Pick<Tutor, 'id' | 'name' | 'email' | 'createdAt' | 'updatedAt'>
+    message: string
+}
 
-export const createTutorResponseMapper = ({
-    id,
-    name,
-    email,
-    createdAt,
-}: Tutor) => ({
+export const tutorResponseMapper = ({ id, name, email, createdAt }: Tutor) => ({
     id,
     name,
     email,

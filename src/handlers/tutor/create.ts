@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { CreateTutorRequestValidator, createTutorRequest } from './request'
 import ValidationError from '../../errors/validation-error'
 import TutorRepository from '../../repositories/tutor'
-import { createTutorResponseMapper } from './response'
+import { tutorResponseMapper } from './response'
 import { BadRequest } from '../../errors'
 
 class CreateTutorHandler {
@@ -28,7 +28,10 @@ class CreateTutorHandler {
         }
         const tutor = await this.tutorRepository.create(requestTutor)
         // Handle Response
-        const tutorResponse = createTutorResponseMapper(tutor)
+        const tutorResponse = {
+            data: tutorResponseMapper(tutor),
+            message: 'Tutor successful created',
+        }
 
         res.status(201).send(tutorResponse)
     }
