@@ -34,6 +34,10 @@ class TutorRepository {
             where: { id },
         })
     }
+
+    async list(): Promise<Tutor[]> {
+        return prisma.tutor.findMany()
+    }
 }
 
 export default TutorRepository
