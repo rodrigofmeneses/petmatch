@@ -4,6 +4,7 @@ import {
     DeleteTutorHandler,
     UpdateTutorHandler,
     ListTutorHandler,
+    ShowTutorHandler,
 } from '../handlers/tutor'
 import {
     CreateTutorRequestValidator,
@@ -16,15 +17,15 @@ const router = Router()
 
 const tutorRepository = new TutorRepository()
 
-const createTutorRequestValidate = new CreateTutorRequestValidator()
+const showHandler = new ShowTutorHandler(tutorRepository)
 
+const createTutorRequestValidate = new CreateTutorRequestValidator()
 const createHandler = new CreateTutorHandler(
     createTutorRequestValidate,
     tutorRepository
 )
 
 const updateTutorRequestValidate = new UpdateTutorRequestValidator()
-
 const updateHandler = new UpdateTutorHandler(
     updateTutorRequestValidate,
     tutorRepository
@@ -34,7 +35,7 @@ const deleteHandler = new DeleteTutorHandler(tutorRepository)
 
 const listHandler = new ListTutorHandler(tutorRepository)
 
-router.get('/tutor')
+router.get('/tutor', (req, res) => showHandler.route(req, res))
 router.post('/tutor', emptyBody, (req, res) => createHandler.route(req, res))
 router.put('/tutor', emptyBody, (req, res) => updateHandler.route(req, res))
 router.delete('/tutor', (req, res) => deleteHandler.route(req, res))

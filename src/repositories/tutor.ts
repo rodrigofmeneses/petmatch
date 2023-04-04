@@ -9,6 +9,10 @@ import { BadRequest } from '../errors'
 const prisma = new PrismaClient()
 
 class TutorRepository {
+    async show(id: string): Promise<Tutor | null> {
+        return prisma.tutor.findFirst({ where: { id } })
+    }
+
     async create(tutor: createTutorRequest): Promise<Tutor> {
         return prisma.tutor.create({ data: tutor })
     }
