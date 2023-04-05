@@ -1,7 +1,11 @@
 import { Router } from 'express'
 import { ShelterRepository } from '../repositories'
 import { PrismaClient } from '@prisma/client'
-import { CreateShelterHandler, ListSheltersHandler } from '../handlers/shelter'
+import {
+    CreateShelterHandler,
+    ListSheltersHandler,
+    ShowShelterHandler,
+} from '../handlers/shelter'
 import { CreateShelterRequestValidator } from '../handlers/shelter/request'
 import { emptyBody } from '../middlewares'
 
@@ -17,9 +21,10 @@ const createHandler = new CreateShelterHandler(
     shelterRepository
 )
 
+const showHandler = new ShowShelterHandler(shelterRepository)
 const listHandler = new ListSheltersHandler(shelterRepository)
 
-router.get('/shelter')
+router.get('/shelter', (req, res) => showHandler.route(req, res))
 router.post('/shelter', emptyBody, (req, res) => createHandler.route(req, res))
 router.put('/shelter')
 router.delete('/shelter')

@@ -12,6 +12,10 @@ class ShelterRepository {
         return this.prisma.shelter.create({ data: shelter })
     }
 
+    async show(id: string) {
+        return this.prisma.shelter.findFirst({ where: { id } })
+    }
+
     async list() {
         return this.prisma.shelter.findMany()
     }
