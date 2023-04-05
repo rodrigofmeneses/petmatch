@@ -8,6 +8,14 @@ class ShelterRepository {
         return this.prisma.shelter.findFirst({ where: { name } })
     }
 
+    async findById(id: string) {
+        return this.prisma.shelter.findFirst({ where: { id } })
+    }
+
+    async deleteById(id: string) {
+        return this.prisma.shelter.delete({ where: { id } })
+    }
+
     async create(shelter: createShelterRequest) {
         return this.prisma.shelter.create({ data: shelter })
     }
