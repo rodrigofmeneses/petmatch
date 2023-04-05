@@ -19,6 +19,16 @@ model Tutor {
   phone     String?
   city      String?
   about     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Shelter {
+  id        String   @id @default(uuid())
+  name      String
+  avatar    String?
+  phone     String?
+  city      String?
   pets      Pet[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,8 +41,8 @@ model Pet {
   city      String?
   about     String?
   image     String?
-  tutor     Tutor    @relation(fields: [tutorId], references: [id])
-  tutorId   String
+  shelter   Shelter  @relation(fields: [shelterId], references: [id])
+  shelterId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
