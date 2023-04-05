@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client'
-import { createShelterRequest } from '../handlers/shelter/request'
+import {
+    UpdateShelterRequest,
+    createShelterRequest,
+} from '../handlers/shelter/request'
 
 class ShelterRepository {
     constructor(protected prisma: PrismaClient) {}
@@ -10,6 +13,13 @@ class ShelterRepository {
 
     async findById(id: string) {
         return this.prisma.shelter.findFirst({ where: { id } })
+    }
+
+    async updateById(id: string, shelter: UpdateShelterRequest) {
+        return this.prisma.shelter.update({
+            data: shelter,
+            where: { id },
+        })
     }
 
     async deleteById(id: string) {

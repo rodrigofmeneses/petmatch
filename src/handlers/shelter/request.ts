@@ -3,7 +3,9 @@ import { paramIsRequired } from '../utils'
 import { Validator } from '../utils/validate'
 
 export type createShelterRequest = Pick<Shelter, 'name' | 'phone' | 'city'>
-
+export type UpdateShelterRequest = Partial<
+    Omit<Shelter, 'id' | 'createdAt' | 'updatedAt'>
+>
 export class CreateShelterRequestValidator
     implements Validator<createShelterRequest>
 {
@@ -20,6 +22,17 @@ export class CreateShelterRequestValidator
         if (!city) {
             return paramIsRequired('city')
         }
+        return true
+    }
+}
+
+export class UpdateShelterRequestValidator
+    implements Validator<UpdateShelterRequest>
+{
+    constructor() {}
+
+    isValid(request: UpdateShelterRequest) {
+        const { name, avatar, phone, city } = request
         return true
     }
 }
