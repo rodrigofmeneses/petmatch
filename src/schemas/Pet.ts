@@ -1,3 +1,5 @@
+import Shelter from './Shelter'
+
 interface Pet {
     id: string
     name: string
@@ -5,6 +7,10 @@ interface Pet {
     city: string | null
     about: string | null
     image: string | null
+    shelter: Shelter
+    shelterId: string
+    createdAt: Date | null
+    updatedAt: Date | null
     [key: string]: any
 }
 
