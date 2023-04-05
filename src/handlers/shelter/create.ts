@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { CreateShelterRequestValidator, createShelterRequest } from './request'
-import { BadRequest, ValidationError } from '../../errors'
+import { BadRequestError, ValidationError } from '../../errors'
 import { ShelterRepository } from '../../repositories'
 import { shelterResponseMapper } from './response'
 
@@ -23,7 +23,7 @@ class CreateShelterHandler {
         // UseCase - Register tutor on database
         const dbShelter = await this.shelterRepository.findByName(name)
         if (dbShelter) {
-            throw new BadRequest('Shelter name already exist')
+            throw new BadRequestError('Shelter name already exist')
         }
         const shelter = await this.shelterRepository.create(requestShelter)
         // Handler Response

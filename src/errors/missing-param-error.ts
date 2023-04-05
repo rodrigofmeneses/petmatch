@@ -1,6 +1,6 @@
-import { BadRequest } from './index'
+import { BadRequestError } from './index'
 
-class MissingParamError extends BadRequest {
+class MissingParamError extends BadRequestError {
     constructor(message: string) {
         super(message)
         this.name = 'MissingParamError'

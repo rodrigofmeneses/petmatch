@@ -1,6 +1,6 @@
-import { BadRequest } from './index'
+import { BadRequestError } from './index'
 
-class InvalidEmailError extends BadRequest {
+class InvalidEmailError extends BadRequestError {
     constructor(message: string) {
         super(message)
         this.name = 'InvalidEmailError'

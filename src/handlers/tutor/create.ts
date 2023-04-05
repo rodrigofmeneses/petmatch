@@ -3,7 +3,7 @@ import { CreateTutorRequestValidator, createTutorRequest } from './request'
 import ValidationError from '../../errors/validation-error'
 import TutorRepository from '../../repositories/tutor'
 import { tutorResponseMapper } from './response'
-import { BadRequest } from '../../errors'
+import { BadRequestError } from '../../errors'
 
 class CreateTutorHandler {
     constructor(
@@ -24,7 +24,7 @@ class CreateTutorHandler {
         // UseCase - Register tutor on database
         const dbTutor = await this.tutorRepository.findByEmail(email)
         if (dbTutor) {
-            throw new BadRequest('Invalid Email')
+            throw new BadRequestError('Invalid Email')
         }
         const tutor = await this.tutorRepository.create(requestTutor)
         // Handle Response

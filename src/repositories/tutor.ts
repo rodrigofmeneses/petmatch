@@ -4,7 +4,6 @@ import {
     createTutorRequest,
     updateTutorRequest,
 } from '../handlers/tutor/request'
-import { BadRequest } from '../errors'
 
 const prisma = new PrismaClient()
 

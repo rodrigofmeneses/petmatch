@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
-import { BadRequest } from '../errors'
+import { BadRequestError } from '../errors'
 
 const emptyBody = (req: Request, res: Response, next: NextFunction) => {
     if (JSON.stringify(req.body) === '{}') {
-        throw new BadRequest('Empty JSON Body')
+        throw new BadRequestError('Empty JSON Body')
     }
     next()
 }
