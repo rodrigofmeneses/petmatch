@@ -11,6 +11,10 @@ class ShelterRepository {
     async create(shelter: createShelterRequest) {
         return this.prisma.shelter.create({ data: shelter })
     }
+
+    async list() {
+        return this.prisma.shelter.findMany()
+    }
 }
 
 export default ShelterRepository
