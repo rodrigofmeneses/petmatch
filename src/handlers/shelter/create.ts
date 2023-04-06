@@ -32,7 +32,7 @@ class CreateShelterHandler {
             message: 'Shelter successful created',
         }
 
-        res.status(201).send(shelter)
+        res.status(201).send(shelterResponse)
     }
 }
 
