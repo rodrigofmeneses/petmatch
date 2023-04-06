@@ -12,7 +12,6 @@ class UpdateShelterHandler {
     ) {}
 
     async route(req: Request, res: Response) {
-        // Receiver Params
         const { id } = req.query
         const { name, avatar, phone, city } = req.body
         const requestShelter = {
@@ -22,15 +21,14 @@ class UpdateShelterHandler {
             city,
         } as UpdateShelterRequest
 
-        // Validate Data - ID
         if (!id) {
             throw new ValidationError('Invalid ID')
         }
-        // Validate Data - Body
+
         if (!this.updateShelterRequestValidator.isValid(requestShelter)) {
             throw new ValidationError('Validation Error')
         }
-        // UseCase - Update
+
         const shelter = (await this.shelterRepository.findById(
             id as string
         )) as Shelter
@@ -45,18 +43,18 @@ class UpdateShelterHandler {
                 throw new BadRequestError('Shelter name already exist')
             }
         }
-        // Update Tutor
+
         for (const key in requestShelter) {
             shelter[key] = requestShelter['key']
         }
 
-        const updatedTutor = (await this.shelterRepository.updateById(
+        const updatedShelter = (await this.shelterRepository.updateById(
             id as string,
             requestShelter
         )) as Shelter
 
         const responseShelter = {
-            data: shelterResponseMapper(updatedTutor),
+            data: shelterResponseMapper(updatedShelter),
             message: 'Shelter successful updated',
         }
         res.send(responseShelter)

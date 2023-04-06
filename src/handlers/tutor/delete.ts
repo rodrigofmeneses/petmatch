@@ -9,13 +9,10 @@ class DeleteTutorHandler {
     constructor(protected tutorRepository: TutorRepository) {}
 
     async route(req: Request, res: Response) {
-        // Receive data
         const { id } = req.query
-        // Validate data
         if (!id) {
             throw new ValidationError('Invalid ID')
         }
-        // UseCase - Delete
         const tutor = await this.tutorRepository.findById(id as string)
         if (!tutor) {
             throw new NotFoundError('Tutor not found')
@@ -23,7 +20,6 @@ class DeleteTutorHandler {
         const deletedTutor = (await this.tutorRepository.deleteById(
             id as string
         )) as Tutor
-        // Response
         const responseTutor = {
             data: tutorResponseMapper(deletedTutor),
             message: 'Tutor successful deleted',

@@ -12,7 +12,6 @@ class UpdateTutorHandler {
     ) {}
 
     async route(req: Request, res: Response) {
-        // Receiver Params
         const { id } = req.query
         const { name, email, password, avatar, phone, city, about } = req.body
         const requestTutor = {
@@ -25,20 +24,16 @@ class UpdateTutorHandler {
             about,
         } as updateTutorRequest
 
-        // Validate Data - ID
         if (!id) {
             throw new ValidationError('Invalid ID')
         }
-        // Validate Data - Body
         if (!this.updateTutorRequestValidator.isValid(requestTutor)) {
             throw new ValidationError('Validation Error')
         }
-        // UseCase - Update
         const tutor = await this.tutorRepository.findById(id as string)
         if (!tutor) {
             throw new NotFoundError('Tutor not found')
         }
-        // Update Tutor
         for (const key in requestTutor) {
             tutor[key] = requestTutor['key']
         }

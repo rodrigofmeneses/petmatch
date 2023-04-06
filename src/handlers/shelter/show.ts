@@ -12,12 +12,10 @@ class ListShelterHandler {
         if (!id) {
             throw new ValidationError('Invalid ID')
         }
-        // Get Tutors
         const tutor = await this.shelterRepository.show(id as string)
         if (!tutor) {
             throw new NotFoundError('Shelter not found')
         }
-        // Response data
         const responseTutor = shelterResponseMapper(tutor)
         res.send({ data: responseTutor, message: 'Successful get shelter' })
     }

@@ -12,12 +12,10 @@ class ListTutorHandler {
         if (!id) {
             throw new ValidationError('Invalid ID')
         }
-        // Get Tutors
         const tutor = await this.tutorRepository.show(id as string)
         if (!tutor) {
             throw new NotFoundError('Tutor not found')
         }
-        // Response data
         const responseTutor = tutorResponseMapper(tutor)
         res.send({ data: responseTutor, message: 'successful get tutor' })
     }

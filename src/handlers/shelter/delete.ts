@@ -9,13 +9,10 @@ class DeleteShelterHandler {
     constructor(protected shelterRepository: ShelterRepository) {}
 
     async route(req: Request, res: Response) {
-        // Receive data
         const { id } = req.query
-        // Validate data
         if (!id) {
             throw new ValidationError('Invalid ID')
         }
-        // UseCase - Delete
         const tutor = await this.shelterRepository.findById(id as string)
         if (!tutor) {
             throw new NotFoundError('Shelter not found')
@@ -23,7 +20,6 @@ class DeleteShelterHandler {
         const deletedTutor = (await this.shelterRepository.deleteById(
             id as string
         )) as Shelter
-        // Response
         const responseShelter = {
             data: shelterResponseMapper(deletedTutor),
             message: 'Shelter successful deleted',
