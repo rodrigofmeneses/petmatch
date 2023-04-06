@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CreateShelterRequestValidator, createShelterRequest } from './request'
+import { CreateShelterRequestValidator, CreateShelterRequest } from './request'
 import { BadRequestError, ValidationError } from '../../errors'
 import { ShelterRepository } from '../../repositories'
 import { shelterResponseMapper } from './response'
@@ -11,16 +11,16 @@ class CreateShelterHandler {
     ) {}
 
     async route(req: Request, res: Response) {
-        const { name, phone, city }: createShelterRequest = req.body
-        const requestShelter = { name, phone, city }
+        const { name, email, password }: CreateShelterRequest = req.body
+        const requestShelter = { name, email, password }
 
         if (!this.createShelterRequestValidator.isValid(requestShelter)) {
             throw new ValidationError('Validation Error')
         }
 
-        const dbShelter = await this.shelterRepository.findByName(name)
+        const dbShelter = await this.shelterRepository.findByEmail(email)
         if (dbShelter) {
-            throw new BadRequestError('Shelter name already exist')
+            throw new BadRequestError('Invalid Email')
         }
         const shelter = await this.shelterRepository.create(requestShelter)
         const shelterResponse = {

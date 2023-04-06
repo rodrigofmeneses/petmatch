@@ -1,14 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import {
     UpdateShelterRequest,
-    createShelterRequest,
+    CreateShelterRequest,
 } from '../handlers/shelter/request'
 
 class ShelterRepository {
     constructor(protected prisma: PrismaClient) {}
 
-    async findByName(name: string) {
-        return this.prisma.shelter.findFirst({ where: { name } })
+    async findByEmail(email: string) {
+        return this.prisma.shelter.findFirst({ where: { email } })
     }
 
     async findById(id: string) {
@@ -26,7 +26,7 @@ class ShelterRepository {
         return this.prisma.shelter.delete({ where: { id } })
     }
 
-    async create(shelter: createShelterRequest) {
+    async create(shelter: CreateShelterRequest) {
         return this.prisma.shelter.create({ data: shelter })
     }
 
