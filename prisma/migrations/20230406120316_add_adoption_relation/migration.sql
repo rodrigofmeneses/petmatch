@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "TutorAdoptPet" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "tutorId" TEXT NOT NULL,
+    "petId" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "TutorAdoptPet_tutorId_fkey" FOREIGN KEY ("tutorId") REFERENCES "Tutor" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "TutorAdoptPet_petId_fkey" FOREIGN KEY ("petId") REFERENCES "Pet" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

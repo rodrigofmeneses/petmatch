@@ -11,16 +11,17 @@ datasource db {
 }
 
 model Tutor {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  avatar    String?
-  phone     String?
-  city      String?
-  about     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String          @id @default(uuid())
+  name          String
+  email         String          @unique
+  password      String
+  avatar        String?
+  phone         String?
+  city          String?
+  about         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  TutorAdoptPet TutorAdoptPet[]
 }
 
 model Shelter {
@@ -35,14 +36,24 @@ model Shelter {
 }
 
 model Pet {
+  id            String          @id @default(uuid())
+  name          String
+  age           String?
+  city          String?
+  about         String?
+  image         String?
+  shelter       Shelter         @relation(fields: [shelterId], references: [id])
+  shelterId     String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  TutorAdoptPet TutorAdoptPet[]
+}
+
+model TutorAdoptPet {
   id        String   @id @default(uuid())
-  name      String
-  age       String?
-  city      String?
-  about     String?
-  image     String?
-  shelter   Shelter  @relation(fields: [shelterId], references: [id])
-  shelterId String
+  tutor     Tutor    @relation(fields: [tutorId], references: [id])
+  tutorId   String
+  pet       Pet      @relation(fields: [petId], references: [id])
+  petId     String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
