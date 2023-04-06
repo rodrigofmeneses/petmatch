@@ -38,6 +38,7 @@ model Shelter {
 model Pet {
   id            String          @id @default(uuid())
   name          String
+  adopted       Boolean         @default(false)
   age           String?
   city          String?
   about         String?

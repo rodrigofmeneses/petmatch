@@ -3,6 +3,7 @@ import Shelter from './Shelter'
 interface Pet {
     id: string
     name: string
+    adopted: boolean
     age: string | null
     city: string | null
     about: string | null
