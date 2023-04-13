@@ -5,11 +5,13 @@ import { TutorRepository } from '../../repositories'
 import { tutorResponseMapper } from './response'
 import { BadRequestError } from '../../errors'
 import { Validator } from '../utils/validate'
+import { Encrypter } from '../../utils'
 
 class CreateTutorHandler {
     constructor(
         protected createTutorRequestValidator: Validator<CreateTutorRequest>,
-        protected tutorRepository: TutorRepository
+        protected tutorRepository: TutorRepository,
+        protected encrypter: Encrypter
     ) {}
 
     async route(req: Request, res: Response) {
@@ -24,6 +26,10 @@ class CreateTutorHandler {
         if (dbTutor) {
             throw new BadRequestError('Invalid Email')
         }
+
+        requestTutor.password = await this.encrypter.encode(
+            requestTutor.password
+        )
         const tutor = await this.tutorRepository.create(requestTutor)
         const tutorResponse = {
             data: tutorResponseMapper(tutor),
