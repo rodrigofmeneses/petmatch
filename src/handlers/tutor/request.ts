@@ -1,34 +1,19 @@
-import { InvalidEmailError, MissingParamError } from '../../errors'
 import { Tutor } from '../../schemas'
 import { Validator } from '../utils/validate'
 
-export type createTutorRequest = Pick<Tutor, 'name' | 'email' | 'password'>
+export type CreateTutorRequest = Pick<Tutor, 'name' | 'email' | 'password'>
 export type updateTutorRequest = Partial<
     Omit<Tutor, 'id' | 'createdAt' | 'updatedAt'>
 >
 
-const paramIsRequired = (name: string) => {
-    throw new MissingParamError(`Param ${name} is required`)
-}
-
 export class CreateTutorRequestValidator
-    implements Validator<createTutorRequest>
+    implements Validator<CreateTutorRequest>
 {
-    constructor() {}
-
-    isValid(request: createTutorRequest) {
+    isValid(request: CreateTutorRequest): boolean {
         const { name, email, password } = request
-        if (!name) {
-            return paramIsRequired('name')
-        }
-        if (!email) {
-            return paramIsRequired('email')
-        }
-        if (!password) {
-            return paramIsRequired('password')
-        }
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-            throw new InvalidEmailError('Invalid email')
+        const emailRegexValidation = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if (!name || !email || !password || !emailRegexValidation.test(email)) {
+            return false
         }
         return true
     }
@@ -39,10 +24,9 @@ export class UpdateTutorRequestValidator
 {
     isValid(request: updateTutorRequest): boolean {
         const { name, email, password, about, avatar, city, phone } = request
-        if (email) {
-            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-                throw new InvalidEmailError('Invalid email')
-            }
+        const emailRegexValidation = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if (email && !emailRegexValidation.test(email)) {
+            return false
         }
         return true
     }

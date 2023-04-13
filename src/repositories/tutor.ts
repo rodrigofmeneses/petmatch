@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { Tutor } from '../schemas'
 import {
-    createTutorRequest,
+    CreateTutorRequest,
     updateTutorRequest,
 } from '../handlers/tutor/request'
 
@@ -12,7 +12,7 @@ class TutorRepository {
         return prisma.tutor.findFirst({ where: { id } })
     }
 
-    async create(tutor: createTutorRequest): Promise<Tutor> {
+    async create(tutor: CreateTutorRequest): Promise<Tutor> {
         return prisma.tutor.create({ data: tutor })
     }
 

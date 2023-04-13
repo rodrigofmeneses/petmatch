@@ -1,18 +1,19 @@
 import { Request, Response } from 'express'
-import { CreateTutorRequestValidator, createTutorRequest } from './request'
-import ValidationError from '../../errors/validation-error'
-import TutorRepository from '../../repositories/tutor'
+import { CreateTutorRequest } from './request'
+import { ValidationError } from '../../errors'
+import { TutorRepository } from '../../repositories'
 import { tutorResponseMapper } from './response'
 import { BadRequestError } from '../../errors'
+import { Validator } from '../utils/validate'
 
 class CreateTutorHandler {
     constructor(
-        protected createTutorRequestValidator: CreateTutorRequestValidator,
+        protected createTutorRequestValidator: Validator<CreateTutorRequest>,
         protected tutorRepository: TutorRepository
     ) {}
 
     async route(req: Request, res: Response) {
-        const { name, email, password }: createTutorRequest = req.body
+        const { name, email, password }: CreateTutorRequest = req.body
         const requestTutor = { name, email, password }
 
         if (!this.createTutorRequestValidator.isValid(requestTutor)) {
